@@ -10,7 +10,7 @@
  - This application is a javascript application that is run through Node.js. This application allows you to write down notes and save them to the site. You have the option to delete the note, also reselect the previous note and create multiple notes.
   
  
-![Deployed Link](https://sufyaan-note-taker.herokuapp.com/notes)
+[Deployed Link](https://sufyaan-note-taker.herokuapp.com/notes)
 
 
 # Installation
