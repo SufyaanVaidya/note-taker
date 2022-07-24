@@ -19,9 +19,22 @@ app.get('/notes', function (req, res) {
 });
 
 app.route('/api/notes')
-.get(function (req, res) {
-    res.json(db)
+
+app.get('/api/notes', function (req, res) {
+    res.json(db);
 })
+
+app.post('/api/notes', function (req, res) {
+    let newNote = req.body;
+    db.push(newNote)
+    fs.writeFile('db/db.json', JSON.stringify(db), function (err) {
+        if(err) {
+            console.log(err);
+        }
+        console.log("Your Note Was Added")
+    })
+})
+
 
 app.listen(PORT, function () {
     console.log('App waiting on port-' + PORT);
