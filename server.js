@@ -18,6 +18,11 @@ app.get('/notes', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
+app.route('/api/notes')
+.get(function (req, res) {
+    res.json(db)
+})
+
 app.listen(PORT, function () {
     console.log('App waiting on port-' + PORT);
 });
