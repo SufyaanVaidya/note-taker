@@ -26,7 +26,7 @@ app.get('/api/notes', function (req, res) {
 
 app.post('/api/notes', function (req, res) {
     let newNote = req.body;
-    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json"));
     let notelength = (noteList.length).toString();
     newNote.id = notelength;
     noteList.push(newNote);
@@ -34,7 +34,15 @@ app.post('/api/notes', function (req, res) {
     res.json(noteList);
 });
 
-
+app.delete('/api/notes/:id', function (req, res) {
+    let noteList = JSON.parse(fs.readFileSync('./db/db.json'));
+    let noteId = (req.params.id).toString();
+    noteList = noteList.filter(function (selected) {
+        return selected.id != noteId;
+    })
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
 
 
 app.listen(PORT, function () {
