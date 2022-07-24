@@ -9,3 +9,7 @@ var PORT = process.env.PORT || 3001;
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+app.listen(PORT, function () {
+    console.log('App waiting on port-' + PORT);
+})
