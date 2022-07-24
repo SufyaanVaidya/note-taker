@@ -18,32 +18,33 @@ app.get('/notes', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-app.route('/api/notes')
+
 
 app.get('/api/notes', function (req, res) {
-    res.json(db);
-})
+    res.sendFile(path.join(__dirname, "/db/db.json"));
+});
 
 app.post('/api/notes', function (req, res) {
     let newNote = req.body;
-    let highestId = 20;
-    for (let i = 0; i < db.length; i++) {
-        let individualNote = db[i];
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let notelength = (noteList.length).toString();
+    newNote.id = notelength;
+    noteList.push(newNote);
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
 
-        if (individualNote.id > highestId) {
-            highestId = individualNote.id;
-        }
-    }
-    newNote.id = highestId + 1;
-    db.push(newNote)
-    fs.writeFile('db/db.json', JSON.stringify(db), function (err) {
-        if(err) {
-            return console.log(err);
-        }
-        console.log("Your Note Was Added")
-    });
-    res.json(newNote);
-})
+app.delete('/api/notes/:id', (req, res) => {
+    // reading notes form db.json
+    let db = JSON.parse(fs.readFileSync('db/db.json'))
+    // removing note with id
+    let deleteNotes = db.filter(item => item.id !== req.params.id);
+    // Rewriting note to db.json
+    fs.writeFileSync('db/db.json', JSON.stringify(deleteNotes));
+    res.json(deleteNotes);
+    
+  })
+
 
 
 app.listen(PORT, function () {
