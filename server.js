@@ -26,6 +26,15 @@ app.get('/api/notes', function (req, res) {
 
 app.post('/api/notes', function (req, res) {
     let newNote = req.body;
+    let highestId = 20;
+    for (let i = 0; i < db.length; i++) {
+        let individualNote = db[i];
+
+        if (individualNote.id > highestId) {
+            highestId = individualNote.id;
+        }
+    }
+    newNote.id = highestId + 1;
     db.push(newNote)
     fs.writeFile('db/db.json', JSON.stringify(db), function (err) {
         if(err) {
