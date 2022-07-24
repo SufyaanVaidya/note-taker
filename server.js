@@ -38,5 +38,5 @@ app.post('/api/notes', function (req, res) {
 
 
 app.listen(PORT, function () {
-    console.log('App waiting on port-' + PORT);
+    console.log('http://localhost:3001/');
 });
