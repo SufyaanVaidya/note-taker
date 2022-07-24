@@ -29,10 +29,11 @@ app.post('/api/notes', function (req, res) {
     db.push(newNote)
     fs.writeFile('db/db.json', JSON.stringify(db), function (err) {
         if(err) {
-            console.log(err);
+            return console.log(err);
         }
         console.log("Your Note Was Added")
-    })
+    });
+    res.json(newNote);
 })
 
 
